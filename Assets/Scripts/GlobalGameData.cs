@@ -12,4 +12,9 @@ public static class GlobalGameData
     public static string gamePhase = "enemySpawnTurn";
     public static int score = 0;
     public static int money = 0;
+
+    public static const int HORIZONTAL_SIZE;
+    public static const int VERTICAL_SIZE;
+
+    public static GameObject[,] = new GameObject[HORIZONTAL_SIZE, VERTICAL_SIZE]; //down left corner is (0, 0), like in usual cartesian coordinates
 }
