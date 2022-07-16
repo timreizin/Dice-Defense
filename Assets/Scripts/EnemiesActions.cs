@@ -4,10 +4,45 @@ using UnityEngine;
 
 public class EnemiesActions : MonoBehaviour
 {
-    
+    char[,] movementTable = new char[GlobalGameData.HORIZONTAL_SIZE, GlobalGameData.VERTICAL_SIZE];
+
     void Start()
     {
-
+        movementTable[GlobalGameData.HORIZONTAL_SIZE / 2, GlobalGameData.VERTICAL_SIZE / 2] = 'O';
+        for (int level = 0; level < GlobalGameData.HORIZONTAL_SIZE - 1 - level; ++level)
+        {
+            for (int i = level; i < GlobalGameData.HORIZONTAL_SIZE - 1 - level; ++i)
+            {
+                movementTable[i, level] = 'U';
+            }
+        }
+        for (int level = 0; level + 1 < GlobalGameData.HORIZONTAL_SIZE - level; ++level)
+        {
+            for (int i = 1 + level; i < GlobalGameData.HORIZONTAL_SIZE - level; ++i)
+            {
+                movementTable[i, GlobalGameData.VERTICAL_SIZE - level - 1] = 'D';
+            }
+        }
+        for (int level = 0; level + 1 < GlobalGameData.VERTICAL_SIZE - level; ++level)
+        {
+            for (int i = 1 + level; i < GlobalGameData.VERTICAL_SIZE - level; ++i)
+            {
+                movementTable[level, i] = 'R';
+            }
+        }
+        for (int level = 0; level < GlobalGameData.VERTICAL_SIZE - 1 - level; ++level)
+        {
+            for (int i = level; i < GlobalGameData.VERTICAL_SIZE - 1 - level; ++i)
+            {
+                movementTable[GlobalGameData.HORIZONTAL_SIZE - level - 1, i] = 'L';
+            }
+        }
+        /*for (int i = GlobalGameData.VERTICAL_SIZE - 1; i >= 0; --i)
+        {
+            string s = "";
+            for (int j = 0; j < GlobalGameData.HORIZONTAL_SIZE; ++j) s += movementTable[j, i];
+            Debug.Log(s);
+        }*/
     }
 
     // Update is called once per frame
