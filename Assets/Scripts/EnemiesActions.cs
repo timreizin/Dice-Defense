@@ -166,11 +166,11 @@ public class EnemiesActions : MonoBehaviour
         }
         else
         {
-            GlobalGameData.objectsTable[from.x, from.y]
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
                 .GetComponent<Enemy>()
-                .Move(new Vector3(GlobalGameData.CELL_SIZE * move.x,
-                                  GlobalGameData.CELL_SIZE * move.y,
-                                  0));
+                .Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f,
+                                  GlobalGameData.CELL_SIZE * move.y / 100f,
+                                  0)));
             GlobalGameData.objectsTable[newPosition.x, newPosition.y] = GlobalGameData.objectsTable[from.x, from.y];
             GlobalGameData.objectsTable[from.x, from.y] = null;
         }
@@ -226,22 +226,22 @@ public class EnemiesActions : MonoBehaviour
     {
         //get random spawn position(in cell notation)
 
-        int randPos = Random.Range(0, 2 * (GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE) - 4); ;
+        int randPos = Random.Range(0, 2 * (GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE) - 4);
         if (randPos < GlobalGameData.VERTICAL_SIZE)
         {
             return new Vector2Int(0, randPos);
         }
         else if (randPos < GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE - 1)
         {
-            return new Vector2Int(randPos - GlobalGameData.VERTICAL_SIZE, GlobalGameData.VERTICAL_SIZE);
+            return new Vector2Int(randPos - GlobalGameData.VERTICAL_SIZE, GlobalGameData.VERTICAL_SIZE - 1);
         }
         else if (randPos < 2 * GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE - 2)
         {
-            return new Vector2Int(14, 42 - randPos);
+            return new Vector2Int(GlobalGameData.HORIZONTAL_SIZE - 1, 2 * GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE - 3 - randPos);
         }
         else
         {
-            return new Vector2Int(56 - randPos, 0);
+            return new Vector2Int(2 * (GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE) - 4 - randPos, 0);
         }
     }
 

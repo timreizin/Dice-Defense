@@ -9,8 +9,9 @@ public class TurnsManagment : MonoBehaviour
     private string lastDiceRotation;
     public GameObject player;
 
-    private void Start()
+    void Start()
     {
+
     }
 
     void Update()
@@ -24,13 +25,8 @@ public class TurnsManagment : MonoBehaviour
             if (GlobalGameData.gamePhase == "enemySpawnTurn")
             {
                 //spawn new enemies
-                int spawnRate = getSpawnRate();
-                for(int i = 0; i < spawnRate; i++)
-                {
-                    //choose position
-                    Vector2 spawnPoint = getRandomPosition();
-                    //spawn
-                }
+                GetComponent<EnemiesActions>().SpawnEnemies(getSpawnRate());
+                GlobalGameData.gamePhase = "playerTurn";
             }
             if (GlobalGameData.gamePhase == "playerTurn")
             {
@@ -80,14 +76,38 @@ public class TurnsManagment : MonoBehaviour
             if (GlobalGameData.gamePhase == "enemyFirstTurn")
             {
                 //move every target(previous cube state) enemy for the first time
+                char move = 'O';
+                switch (lastDiceRotation)
+                {
+                    case "up":
+                        move = 'U';
+                        break;
+
+                    case "down":
+                        move = 'D';
+                        break;
+
+                    case "left":
+                        move = 'L';
+                        break;
+
+                    case "right":
+                        move = 'R';
+                        break;
+                }
+                GetComponent<EnemiesActions>().MoveEnemies(previousDiceTopFace, move);
+                GlobalGameData.gamePhase = "turrelShooting";
             }
             if (GlobalGameData.gamePhase == "turrelShooting")
             {
                 //shoot from every turrel
+                GlobalGameData.gamePhase = "enemySecondTurn";
             }
             if (GlobalGameData.gamePhase == "enemySecondTurn")
             {
                 //move every target(new cube state) enemy for the second time
+                GetComponent<EnemiesActions>().MoveEnemiesToPlayer(player.GetComponent<PlayerManagment>().topFace.type);
+                GlobalGameData.gamePhase = "endOfCycleTurn";
             }
             if(GlobalGameData.gamePhase == "endOfCycleTurn")
             {
@@ -106,31 +126,6 @@ public class TurnsManagment : MonoBehaviour
 
         //temporary!
         return 3;
-    }
-
-    Vector2 getRandomPosition()
-    {
-        //get random spawn position(in cell notation)
-
-        Vector2 spawnPoint;
-        int randPos = Random.Range(0, 56);
-        if (randPos < 15)
-        {
-            spawnPoint = new Vector2(randPos, 0);
-        }
-        else if (randPos < 29)
-        {
-            spawnPoint = new Vector2(14, randPos - 14);
-        }
-        else if (randPos < 43)
-        {
-            spawnPoint = new Vector2(42 - randPos, 14);
-        }
-        else
-        {
-            spawnPoint = new Vector2(0, 56 - randPos);
-        }
-        return spawnPoint;
     }
 
     int getMoneyIncome()

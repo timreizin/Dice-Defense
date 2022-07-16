@@ -1252,6 +1252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1729966762}
   - component: {fileID: 1729966763}
+  - component: {fileID: 1729966764}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -1287,6 +1288,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 125751542}
+--- !u!114 &1729966764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729966761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7944a01335654f4684cb02c7fe6c281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 8687743994300042117, guid: f6ff72ee97f754571963caeca37ebc7c, type: 3}
 --- !u!1 &1744166372
 GameObject:
   m_ObjectHideFlags: 0
