@@ -13,6 +13,7 @@ public class TurnsManagment : MonoBehaviour
     {
         playerManagment = GameObject.Find("Player").GetComponent<PlayerManagment>();
     }
+
     void Update()
     {
         if (!GlobalGameData.IsGamePaused)
@@ -107,6 +108,7 @@ public class TurnsManagment : MonoBehaviour
         //temporary!
         return 3;
     }
+
     Vector2 getRandomPosition()
     {
         //get random spawn position(in cell notation)
@@ -131,6 +133,7 @@ public class TurnsManagment : MonoBehaviour
         }
         return spawnPoint;
     }
+
     int getMoneyIncome()
     {
         //get money income
@@ -138,6 +141,7 @@ public class TurnsManagment : MonoBehaviour
         //temporary!
         return 1;
     }
+
     int getScoreIncome()
     {
         //get score income

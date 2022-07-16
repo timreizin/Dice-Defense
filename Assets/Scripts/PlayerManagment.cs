@@ -11,6 +11,7 @@ public class PlayerManagment : MonoBehaviour
     public int upFace;    
     public int downFace;
     public int health;
+
     void Start()
     {
         
@@ -30,6 +31,7 @@ public class PlayerManagment : MonoBehaviour
         //rotate values of dice faces
 
         int temp;
+
         if(mode == "left")
         {
             temp = topFace;
