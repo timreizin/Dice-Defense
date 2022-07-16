@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemiesActions : MonoBehaviour
 {
+    public GameObject Enemy;
+
     char[,] movementTable = new char[GlobalGameData.HORIZONTAL_SIZE, GlobalGameData.VERTICAL_SIZE];
 
     void Start()
@@ -151,42 +153,122 @@ public class EnemiesActions : MonoBehaviour
         return true;
     }
 
+    void CheckAndMove(Vector2Int from, Vector2Int move, int type)
+    {
+        if (GlobalGameData.objectsTable[from.x, from.y] == null) return;
+        if (GlobalGameData.objectsTable[from.x, from.y].tag != "Enemy") return;
+        if (GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type) return;
+        Vector2Int newPosition = from + move;
+        if (!IsValidMove(newPosition))
+        {
+            //destroy
+            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
+        }
+        else
+        {
+            GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .Move(new Vector3(GlobalGameData.CELL_SIZE * move.x,
+                                  GlobalGameData.CELL_SIZE * move.y,
+                                  0));
+            GlobalGameData.objectsTable[newPosition.x, newPosition.y] = GlobalGameData.objectsTable[from.x, from.y];
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
+    }
+
     public void MoveEnemies(int type, char direction)
     {
         Vector2Int move = DirectionToMove(direction);
         Vector2Int iterator = StartingIterator(direction);
         do
         {
-            if (GlobalGameData.objectsTable[iterator.x, iterator.y] == null) continue;
-            if (GlobalGameData.objectsTable[iterator.x, iterator.y].tag != "Enemy") continue;
-            if (GlobalGameData.objectsTable[iterator.x, iterator.y].GetComponent<Enemy>().type != type) continue;
-            Vector2Int newPosition = iterator + move;
-            if (!IsValidMove(newPosition))
-            {
-                //destroy
-                Destroy(GlobalGameData.objectsTable[iterator.x, iterator.y]);
-            }
-            else
-            {
-                GlobalGameData.objectsTable[iterator.x, iterator.y]
-                    .GetComponent<Enemy>()
-                    .Move(new Vector3(GlobalGameData.CELL_SIZE * move.x,
-                                      GlobalGameData.CELL_SIZE * move.y,
-                                      0));
-                GlobalGameData.objectsTable[newPosition.x, newPosition.y] = GlobalGameData.objectsTable[iterator.x, iterator.y];
-                GlobalGameData.objectsTable[iterator.x, iterator.y] = null;
-            }
+            CheckAndMove(iterator, move, type);
         } while (IncrementIterator(ref iterator, direction));
-    }
+    } // add case for movement into player
 
     public void MoveEnemiesToPlayer(int type)
     {
+        for (int level = 1; level < GlobalGameData.HORIZONTAL_SIZE / 2; ++level)
+        {
+            Vector2Int iterator = new Vector2Int(GlobalGameData.HORIZONTAL_SIZE / 2 - level, GlobalGameData.VERTICAL_SIZE / 2 - level);
+            while (++iterator.y != GlobalGameData.VERTICAL_SIZE / 2 + level)
+            {
+                CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+            }
 
+            while (++iterator.x != GlobalGameData.HORIZONTAL_SIZE / 2 + level)
+            {
+                CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+            }
+
+            while (--iterator.y != GlobalGameData.VERTICAL_SIZE / 2 - level)
+            {
+                CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+            }
+
+            while (--iterator.x != GlobalGameData.HORIZONTAL_SIZE / 2 - level)
+            {
+                CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+            }
+
+            //now corners
+            CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+            iterator.y += 2 * level;
+            CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+            iterator.x += 2 * level;
+            CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+            iterator.y -= 2 * level;
+            CheckAndMove(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type);
+        }
+    }
+
+    Vector2Int GetRandomPosition()
+    {
+        //get random spawn position(in cell notation)
+
+        int randPos = Random.Range(0, 2 * (GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE) - 4); ;
+        if (randPos < GlobalGameData.VERTICAL_SIZE)
+        {
+            return new Vector2Int(0, randPos);
+        }
+        else if (randPos < GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE - 1)
+        {
+            return new Vector2Int(randPos - GlobalGameData.VERTICAL_SIZE, GlobalGameData.VERTICAL_SIZE);
+        }
+        else if (randPos < 2 * GlobalGameData.VERTICAL_SIZE + GlobalGameData.HORIZONTAL_SIZE - 2)
+        {
+            return new Vector2Int(14, 42 - randPos);
+        }
+        else
+        {
+            return new Vector2Int(56 - randPos, 0);
+        }
+    }
+
+    Vector3 FromTableToWorld(Vector2Int position)
+    {
+        return new Vector3((30.5f + 60f * position.x) / 100f - (1201f / 200f), (30.5f + 60f * position.y) / 100f - (902f / 200f));
+    }
+
+    int GetEnemyType()
+    {
+        int type = Random.Range(0, 6);
+        return type;
     }
 
     public void SpawnEnemies(int amount)
     {
-
+        for (int i = 0; i < amount; ++i)
+        {
+            Vector2Int position = GetRandomPosition();
+            if (GlobalGameData.objectsTable[position.x, position.y] == null)
+            {
+                //spawn
+                GlobalGameData.objectsTable[position.x, position.y] = Instantiate(Enemy);
+                GlobalGameData.objectsTable[position.x, position.y].transform.position = FromTableToWorld(position);
+                GlobalGameData.objectsTable[position.x, position.y].GetComponent<Enemy>().type = GetEnemyType();
+            }
+        }
     }
 
 }
