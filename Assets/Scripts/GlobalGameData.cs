@@ -13,8 +13,8 @@ public static class GlobalGameData
     public static int score = 0;
     public static int money = 0;
 
-    public static const int HORIZONTAL_SIZE;
-    public static const int VERTICAL_SIZE;
+    public const int HORIZONTAL_SIZE = 15;
+    public const int VERTICAL_SIZE = 15;
 
-    public static GameObject[,] = new GameObject[HORIZONTAL_SIZE, VERTICAL_SIZE]; //down left corner is (0, 0), like in usual cartesian coordinates
+    public static GameObject[,] objectsTable = new GameObject[HORIZONTAL_SIZE, VERTICAL_SIZE]; //down left corner is (0, 0), like in usual cartesian coordinates
 }
