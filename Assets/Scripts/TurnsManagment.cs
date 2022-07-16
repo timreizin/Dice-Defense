@@ -7,11 +7,10 @@ public class TurnsManagment : MonoBehaviour
     private float timer;
     private int previousDiceTopFace;
     private string lastDiceRotation;
-    public PlayerManagment playerManagment;
+    public GameObject player;
 
     private void Start()
     {
-        playerManagment = GameObject.Find("Player").GetComponent<PlayerManagment>();
     }
 
     void Update()
@@ -44,36 +43,36 @@ public class TurnsManagment : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     //move up
-                    previousDiceTopFace = playerManagment.topFace;
+                    previousDiceTopFace = player.GetComponent<PlayerManagment>().topFace.type;
                     lastDiceRotation = "up";
-                    playerManagment.rotateDice("up");
+                    player.GetComponent<PlayerManagment>().rotateDice("up");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
                 }
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     //move left
-                    previousDiceTopFace = playerManagment.topFace;
+                    previousDiceTopFace = player.GetComponent<PlayerManagment>().topFace.type;
                     lastDiceRotation = "left";
-                    playerManagment.rotateDice("left");
+                    player.GetComponent<PlayerManagment>().rotateDice("left");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
                 }
                 if (Input.GetKeyDown(KeyCode.S))
                 {
                     //move down
-                    previousDiceTopFace = playerManagment.topFace;
+                    previousDiceTopFace = player.GetComponent<PlayerManagment>().topFace.type;
                     lastDiceRotation = "down";
-                    playerManagment.rotateDice("down");
+                    player.GetComponent<PlayerManagment>().rotateDice("down");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
                 }
                 if (Input.GetKeyDown(KeyCode.D))
                 {
                     //move right
-                    previousDiceTopFace = playerManagment.topFace;
+                    previousDiceTopFace = player.GetComponent<PlayerManagment>().topFace.type;
                     lastDiceRotation = "right";
-                    playerManagment.rotateDice("right");
+                    player.GetComponent<PlayerManagment>().rotateDice("right");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
                 }

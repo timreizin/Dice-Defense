@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class PlayerManagment : MonoBehaviour
 {
-    public int leftFace;
-    public int rightFace;
-    public int topFace;
-    public int bottomFace;
-    public int upFace;    
-    public int downFace;
+    public DiceFace leftFace;
+    public DiceFace rightFace;
+    public DiceFace topFace;
+    public DiceFace bottomFace;
+    public DiceFace downFace;
+    public DiceFace upFace;
     public int health;
+    private SpriteRenderer spriteRenderer;
+    public GameObject background;
 
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        background.GetComponent<BackgroundManagment>().updateBackgroundPlayerFaces();
     }
 
     void Update()
@@ -30,7 +33,7 @@ public class PlayerManagment : MonoBehaviour
     {
         //rotate values of dice faces
 
-        int temp;
+        DiceFace temp;
 
         if(mode == "left")
         {
@@ -64,5 +67,7 @@ public class PlayerManagment : MonoBehaviour
             bottomFace = downFace;
             downFace = temp;
         }
+        spriteRenderer.sprite = topFace.sprite;
+        background.GetComponent<BackgroundManagment>().updateBackgroundPlayerFaces();
     }
 }
