@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
 
     public int type;
 
+    public GameObject gameLogic;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,7 @@ public class Enemy : MonoBehaviour
             if (elapsedTime >= MOVE_TIME) transform.position = newPosition;
             yield return null;
         }
+        gameLogic.GetComponent<TurnsManagment>().counter--;
     }
 
     //add function for destroyment

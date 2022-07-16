@@ -8,10 +8,12 @@ public class TurnsManagment : MonoBehaviour
     private int previousDiceTopFace;
     private string lastDiceRotation;
     public GameObject player;
+    public int counter;
+    private bool locker;
 
     void Start()
     {
-
+        locker = true;
     }
 
     void Update()
@@ -95,8 +97,16 @@ public class TurnsManagment : MonoBehaviour
                         move = 'R';
                         break;
                 }
-                GetComponent<EnemiesActions>().MoveEnemies(previousDiceTopFace, move);
-                GlobalGameData.gamePhase = "turrelShooting";
+                if (locker)
+                {
+                    GetComponent<EnemiesActions>().MoveEnemies(previousDiceTopFace, move);
+                    locker = false;
+                }
+                if (counter == 0)
+                {
+                    locker = true;
+                    GlobalGameData.gamePhase = "turrelShooting";
+                }
             }
             if (GlobalGameData.gamePhase == "turrelShooting")
             {
@@ -106,8 +116,17 @@ public class TurnsManagment : MonoBehaviour
             if (GlobalGameData.gamePhase == "enemySecondTurn")
             {
                 //move every target(new cube state) enemy for the second time
-                GetComponent<EnemiesActions>().MoveEnemiesToPlayer(player.GetComponent<PlayerManagment>().topFace.type);
-                GlobalGameData.gamePhase = "endOfCycleTurn";
+                if (locker)
+                {
+                    GetComponent<EnemiesActions>().MoveEnemiesToPlayer(0);
+                    locker = false;
+                }
+                if (counter == 0)
+                {
+                    locker = true;
+                    GlobalGameData.gamePhase = "endOfCycleTurn";
+                }
+
             }
             if(GlobalGameData.gamePhase == "endOfCycleTurn")
             {
