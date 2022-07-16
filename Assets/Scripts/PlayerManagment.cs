@@ -33,34 +33,34 @@ public class PlayerManagment : MonoBehaviour
         if(mode == "left")
         {
             temp = topFace;
-            topFace = leftFace;
-            leftFace = bottomFace;
-            bottomFace = rightFace;
-            rightFace = temp;
-        }
-        if (mode == "right")
-        {
-            temp = topFace;
             topFace = rightFace;
             rightFace = bottomFace;
             bottomFace = leftFace;
             leftFace = temp;
         }
-        if (mode == "up")
+        if (mode == "right")
         {
             temp = topFace;
-            topFace = upFace;
-            upFace = bottomFace;
-            bottomFace = downFace;
-            downFace = temp;
+            topFace = leftFace;
+            leftFace = bottomFace;
+            bottomFace = rightFace;
+            rightFace = temp;
         }
-        if (mode == "down")
+        if (mode == "up")
         {
             temp = topFace;
             topFace = downFace;
             downFace = bottomFace;
             bottomFace = upFace;
             upFace = temp;
+        }
+        if (mode == "down")
+        {
+            temp = topFace;
+            topFace = upFace;
+            upFace = bottomFace;
+            bottomFace = downFace;
+            downFace = temp;
         }
     }
 }
