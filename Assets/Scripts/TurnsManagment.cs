@@ -6,6 +6,7 @@ public class TurnsManagment : MonoBehaviour
 {
     private float timer;
     private int previousDiceTopFace;
+    private string lastDiceRotation;
     public PlayerManagment playerManagment;
 
     private void Start()
@@ -43,6 +44,7 @@ public class TurnsManagment : MonoBehaviour
                 {
                     //move up
                     previousDiceTopFace = playerManagment.topFace;
+                    lastDiceRotation = "up";
                     playerManagment.rotateDice("up");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
@@ -51,6 +53,7 @@ public class TurnsManagment : MonoBehaviour
                 {
                     //move left
                     previousDiceTopFace = playerManagment.topFace;
+                    lastDiceRotation = "left";
                     playerManagment.rotateDice("left");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
@@ -59,6 +62,7 @@ public class TurnsManagment : MonoBehaviour
                 {
                     //move down
                     previousDiceTopFace = playerManagment.topFace;
+                    lastDiceRotation = "down";
                     playerManagment.rotateDice("down");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
@@ -67,6 +71,7 @@ public class TurnsManagment : MonoBehaviour
                 {
                     //move right
                     previousDiceTopFace = playerManagment.topFace;
+                    lastDiceRotation = "right";
                     playerManagment.rotateDice("right");
                     GlobalGameData.gamePhase = "enemyFirstTurn";
                     return;
