@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 3672561573
+    locked: 0
+  - name: background2
+    uniqueID: 2829091245
+    locked: 0
+  - name: enemies
+    uniqueID: 496249887
+    locked: 0
+  - name: turrels
+    uniqueID: 3391596205
+    locked: 0
