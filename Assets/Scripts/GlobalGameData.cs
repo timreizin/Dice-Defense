@@ -9,7 +9,7 @@ public static class GlobalGameData
     public static float cellUpdateTime;
     public static bool IsTabMenuOpened = false;
     public static bool IsGamePaused = false;
-    public static string gamePhase = "playerTurn";
+    public static string gamePhase = "enemySpawnTurn";
     public static int score = 0;
     public static int money = 0;
 
