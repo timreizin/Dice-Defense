@@ -22,11 +22,7 @@ public class PlayerManagment : MonoBehaviour
 
     void Update()
     {
-        if(health <= 0)
-        {
-            //end the game, show score and ask for replay
 
-        }
     }
 
     public void rotateDice(string mode)
@@ -69,5 +65,15 @@ public class PlayerManagment : MonoBehaviour
         }
         spriteRenderer.sprite = topFace.sprite;
         background.GetComponent<BackgroundManagment>().updateBackgroundPlayerFaces();
+    }
+
+    public void DecreaseHP()
+    {
+        --health;
+        if (health <= 0)
+        {
+            //end the game, show score and ask for replay
+
+        }
     }
 }

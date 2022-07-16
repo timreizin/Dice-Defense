@@ -6,10 +6,14 @@ public class EnemiesActions : MonoBehaviour
 {
     public GameObject Enemy;
 
+    GameObject player;
+
     char[,] movementTable = new char[GlobalGameData.HORIZONTAL_SIZE, GlobalGameData.VERTICAL_SIZE];
 
     void Start()
     {
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
+
         movementTable[GlobalGameData.HORIZONTAL_SIZE / 2, GlobalGameData.VERTICAL_SIZE / 2] = 'O';
         for (int level = 0; level < GlobalGameData.HORIZONTAL_SIZE - 1 - level; ++level)
         {
@@ -83,6 +87,17 @@ public class EnemiesActions : MonoBehaviour
             position.y >= GlobalGameData.VERTICAL_SIZE)
             return false;
         return GlobalGameData.objectsTable[position.x, position.y] == null; 
+    }
+
+    bool IsObjectByTag(Vector2Int position, string tag)
+    {
+        if (position.x < 0 ||
+            position.y < 0 ||
+            position.x >= GlobalGameData.HORIZONTAL_SIZE ||
+            position.y >= GlobalGameData.VERTICAL_SIZE)
+            return false;
+        if (GlobalGameData.objectsTable[position.x, position.y] == null) return false;
+        return GlobalGameData.objectsTable[position.x, position.y].tag == tag;
     }
 
     Vector2Int StartingIterator(char direction)
@@ -159,6 +174,24 @@ public class EnemiesActions : MonoBehaviour
         if (GlobalGameData.objectsTable[from.x, from.y].tag != "Enemy") return;
         if (GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type) return;
         Vector2Int newPosition = from + move;
+        if (IsObjectByTag(newPosition, "Player"))
+        {
+            player.GetComponent<PlayerManagment>().DecreaseHP();
+        }
+        if (IsObjectByTag(newPosition, "Wall"))
+        {
+            //maybe add animation going half-way, and then back
+            if (!GlobalGameData.objectsTable[newPosition.x, newPosition.y].GetComponent<Wall>().DecreaseHP())
+            {
+                Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
+            }
+        }
+        if (IsObjectByTag(newPosition, "Mine"))
+        {
+            //add animation of moving there, and then baaaam
+            Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
+            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
+        }
         if (!IsValidMove(newPosition))
         {
             //destroy
