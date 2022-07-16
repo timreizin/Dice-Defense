@@ -1288,6 +1288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 125751542}
+  counter: 0
 --- !u!114 &1729966764
 MonoBehaviour:
   m_ObjectHideFlags: 0

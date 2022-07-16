@@ -157,8 +157,10 @@ public class EnemiesActions : MonoBehaviour
     {
         if (GlobalGameData.objectsTable[from.x, from.y] == null) return;
         if (GlobalGameData.objectsTable[from.x, from.y].tag != "Enemy") return;
-        if (GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type) return;
+        //Debug.Log(2);
+        if (type != 0 && GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type) return;
         Vector2Int newPosition = from + move;
+        //Debug.Log(1);
         if (!IsValidMove(newPosition))
         {
             //destroy
@@ -166,6 +168,7 @@ public class EnemiesActions : MonoBehaviour
         }
         else
         {
+            GetComponent<TurnsManagment>().counter++;
             StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
                 .GetComponent<Enemy>()
                 .Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f,
@@ -188,7 +191,7 @@ public class EnemiesActions : MonoBehaviour
 
     public void MoveEnemiesToPlayer(int type)
     {
-        for (int level = 1; level < GlobalGameData.HORIZONTAL_SIZE / 2; ++level)
+        for (int level = 1; level <= GlobalGameData.HORIZONTAL_SIZE / 2; ++level)
         {
             Vector2Int iterator = new Vector2Int(GlobalGameData.HORIZONTAL_SIZE / 2 - level, GlobalGameData.VERTICAL_SIZE / 2 - level);
             while (++iterator.y != GlobalGameData.VERTICAL_SIZE / 2 + level)
@@ -252,7 +255,7 @@ public class EnemiesActions : MonoBehaviour
 
     int GetEnemyType()
     {
-        int type = Random.Range(0, 6);
+        int type = Random.Range(1, 7);
         return type;
     }
 
@@ -267,8 +270,23 @@ public class EnemiesActions : MonoBehaviour
                 GlobalGameData.objectsTable[position.x, position.y] = Instantiate(Enemy);
                 GlobalGameData.objectsTable[position.x, position.y].transform.position = FromTableToWorld(position);
                 GlobalGameData.objectsTable[position.x, position.y].GetComponent<Enemy>().type = GetEnemyType();
+                GlobalGameData.objectsTable[position.x, position.y].GetComponent<Enemy>().gameLogic = gameObject;
             }
         }
     }
+
+    /*public int countEnemies()
+    {
+        int amount = 0;
+        for(int i = 0; i < GlobalGameData.HORIZONTAL_SIZE; ++i)
+        {
+            for(int j = 0; j < GlobalGameData.VERTICAL_SIZE; ++j)
+            {
+                if (GlobalGameData.objectsTable[i, j] != null && GlobalGameData.objectsTable[i, j].gameObject.tag == "Enemy") ++amount;
+            }
+        }
+        return amount;
+    }*/
+
 
 }
