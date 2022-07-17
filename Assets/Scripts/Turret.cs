@@ -23,19 +23,22 @@ public class Turret : MonoBehaviour
 
     }
 
-    public void Shoot()
+    public void Shoot(Vector2Int position)
     {
         if (type == 0)
         {
             //bullets horizontal
+
             GameObject newBullet = Instantiate(bullet);
             newBullet.GetComponent<Bullet>().gameLogic = gameLogic;
             newBullet.transform.rotation = Quaternion.Euler(0, 0, 90);//right
             newBullet.GetComponent<Bullet>().range = new Vector3(range * GlobalGameData.CELL_SIZE / 100f, range * GlobalGameData.CELL_SIZE / 100f, 0);
+            newBullet.transform.position = FromTableToWorld(position);
             newBullet = Instantiate(bullet);
             newBullet.GetComponent<Bullet>().gameLogic = gameLogic;
             newBullet.transform.rotation = Quaternion.Euler(0, 0, -90);//left
             newBullet.GetComponent<Bullet>().range = new Vector3(range * GlobalGameData.CELL_SIZE / 100f, range * GlobalGameData.CELL_SIZE / 100f, 0);
+            newBullet.transform.position = FromTableToWorld(position);
         }
         else if (type == 1)
         {
@@ -43,16 +46,22 @@ public class Turret : MonoBehaviour
             GameObject newBullet = Instantiate(bullet);
             newBullet.GetComponent<Bullet>().gameLogic = gameLogic;
             newBullet.GetComponent<Bullet>().range = new Vector3(range * GlobalGameData.CELL_SIZE / 100f, range * GlobalGameData.CELL_SIZE / 100f, 0);
+            newBullet.transform.position = FromTableToWorld(position);
             //up
             newBullet = Instantiate(bullet);
             newBullet.GetComponent<Bullet>().gameLogic = gameLogic;
             newBullet.transform.rotation = Quaternion.Euler(0, 0, 180);
             newBullet.GetComponent<Bullet>().range = new Vector3(range * GlobalGameData.CELL_SIZE / 100f, range * GlobalGameData.CELL_SIZE / 100f, 0);
+            newBullet.transform.position = FromTableToWorld(position);
             //down
         }
         else 
         {
             //waves
         }
+    }
+    Vector3 FromTableToWorld(Vector2Int position)
+    {
+        return new Vector3((30.5f + 60f * position.x) / 100f - (1201f / 200f), (30.5f + 60f * position.y) / 100f - (902f / 200f));
     }
 }

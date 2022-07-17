@@ -1598,9 +1598,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAllowedDistance: 2
   maxAllowedDistance: 3
-  building: {fileID: 5971785199502049975, guid: 0af1826ccedbd8241b772f79986d8868, type: 3}
+  building: {fileID: 6383403724802278495, guid: 4a4bfca11afea4f75bd66004b2ff1a68, type: 3}
   gameLogic: {fileID: 1729966761}
   cost: 4
+  turretType: 0
 --- !u!1 &1465672244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,9 +1802,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAllowedDistance: 1
   maxAllowedDistance: 5
-  building: {fileID: 3732820269114016053, guid: f681c0601896d714885739de84306ced, type: 3}
+  building: {fileID: 6383403724802278495, guid: c898e89fb7fba404f9b8ce0ced71be48, type: 3}
   gameLogic: {fileID: 1729966761}
   cost: 2
+  turretType: 1
 --- !u!61 &1668826810
 BoxCollider2D:
   m_ObjectHideFlags: 0

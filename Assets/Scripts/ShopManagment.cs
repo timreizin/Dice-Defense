@@ -9,6 +9,7 @@ public class ShopManagment : MonoBehaviour
     public GameObject building;
     public GameObject gameLogic;
     public int cost;
+    public int turretType;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +51,11 @@ public class ShopManagment : MonoBehaviour
                             GlobalGameData.money -= cost;
                             GlobalGameData.objectsTable[x, y] = Instantiate(building);
                             GlobalGameData.objectsTable[x, y].transform.position = FromTableToWorld(new Vector2Int(x, y));
+                            if(GlobalGameData.objectsTable[x, y].tag == "Turret")
+                            {
+                                GlobalGameData.objectsTable[x, y].GetComponent<Turret>().gameLogic = gameLogic;
+                                GlobalGameData.objectsTable[x, y].GetComponent<Turret>().type = turretType;
+                            }
                         }
                     }
                 }
