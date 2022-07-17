@@ -6,7 +6,7 @@ public static class GlobalGameData
 {
     //global game info, availble for every object
 
-    public static float cellUpdateTime;
+    public static float cellUpdateTime = 0.5f;
     public static bool IsTabMenuOpened = false;
     public static bool IsGamePaused = false;
     public static string gamePhase = "enemySpawnTurn";
@@ -21,4 +21,16 @@ public static class GlobalGameData
     public static GameObject selectedBuilding = null;
 
     public static GameObject[,] objectsTable = new GameObject[HORIZONTAL_SIZE, VERTICAL_SIZE]; //down left corner is (0, 0), like in usual cartesian coordinates
+
+    public static void DataRestart()
+    {
+        cellUpdateTime = 0.5f;
+        IsTabMenuOpened = false;
+        IsGamePaused = false;
+        gamePhase = "enemySpawnTurn";
+        score = 0;
+        money = 0;
+        selectedBuilding = null;
+        objectsTable = new GameObject[HORIZONTAL_SIZE, VERTICAL_SIZE];
+    }
 }

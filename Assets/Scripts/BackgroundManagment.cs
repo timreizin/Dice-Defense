@@ -11,7 +11,13 @@ public class BackgroundManagment : MonoBehaviour
     public GameObject BackgroundTopFace;
     public GameObject BackgroundUpFace;
     public GameObject BackgroundDownFace;
+    public GameObject pause;
     public GameObject player;
+
+    private void Awake()
+    {
+        GlobalGameData.DataRestart();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +65,6 @@ public class BackgroundManagment : MonoBehaviour
             }
         }
 
-        //handle
 
         if(GlobalGameData.gamePhase == "playerTurn")
         {
@@ -70,8 +75,19 @@ public class BackgroundManagment : MonoBehaviour
             backgroundYourTurnLabel.SetActive(false);
         }
 
-        //check for game pause
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GlobalGameData.IsGamePaused = !GlobalGameData.IsGamePaused;
+            Debug.Log(GlobalGameData.IsGamePaused);
+        }
+        if (GlobalGameData.IsGamePaused)
+        {
+            pause.SetActive(true);
+        }
+        else
+        {
+            pause.SetActive(false);
+        }
     }
     public void updateBackgroundPlayerFaces()
     {
