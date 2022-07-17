@@ -28,8 +28,9 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnCollisionEnter2D(Collision2D collider)
     {
+        if (collider.gameObject.tag != "Enemy") return;
         Destroy(collider.gameObject);
     }
 }

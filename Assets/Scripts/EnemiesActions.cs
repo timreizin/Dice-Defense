@@ -195,8 +195,7 @@ public class EnemiesActions : MonoBehaviour
         {
             StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
                 .GetComponent<Enemy>()
-                .MoveHalfToPlayer(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
-                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                .MoveHalfToPlayer(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f, GlobalGameData.CELL_SIZE * move.y / 200f,
                                   0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
         }
         else if (IsObjectByTag(newPosition, "Wall"))

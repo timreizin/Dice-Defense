@@ -24,7 +24,7 @@ public class TurretsActions : MonoBehaviour
             {
                 if (GlobalGameData.objectsTable[i, j] == null) continue;
                 if (GlobalGameData.objectsTable[i, j].tag != "Turret") continue;
-                GlobalGameData.objectsTable[i, j].GetComponent<Turret>().Shoot();
+                GlobalGameData.objectsTable[i, j].GetComponent<Turret>().Shoot(new Vector2Int(i, j));
             }
         }
     }
