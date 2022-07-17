@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 87084620}
   - component: {fileID: 87084622}
   - component: {fileID: 87084621}
+  - component: {fileID: 87084623}
   m_Layer: 0
   m_Name: ShopTurret3
   m_TagString: Untagged
@@ -318,6 +319,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &87084623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87084619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6976dc91673f2634abdfe7faeaf4de82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAllowedDistance: 2
+  maxAllowedDistance: 5
+  building: {fileID: 1095821482741235527, guid: 3c22c3e49bf1a453d8cfc4320bb4fe5b, type: 3}
+  gameLogic: {fileID: 1729966761}
+  cost: 12
+  turretType: 2
 --- !u!1 &125751542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +1611,7 @@ SpriteRenderer:
   m_SortingLayerID: -1465876051
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1d67c1d17d311a043aa69fd01b37644a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67637e2a1c56aae4b8687a11ffd15bcf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2787,7 +2806,7 @@ SpriteRenderer:
   m_SortingLayerID: -1465876051
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: db7a1378fe8b56e47a6e20582921ded4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f7de2e6e4b397f48a63fab96a1329ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

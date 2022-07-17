@@ -20,9 +20,18 @@ public class Wave : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GlobalGameData.IsTabMenuOpened)
+        {
+            GetComponent<Renderer>().enabled = false;
+        }
+        else
+        {
+            GetComponent<Renderer>().enabled = true;
+        }
+        if (GlobalGameData.IsGamePaused) return;
         transform.localScale += new Vector3(1, 1, 0) * speed * Time.deltaTime;
         transform.position = startingPosition;
-        if (transform.localScale.x >= 4)
+        if (transform.localScale.x >= 3.8)
         {
             gameLogic.GetComponent<TurnsManagment>().counter--;
             Destroy(gameObject);

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4135879239079174527}
   m_Layer: 0
   m_Name: TurretWave
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   range: 2
+  ammunition: 3
   bullet: {fileID: 3837792160104294322, guid: 9169082b189db49a8a0e68c582d4ea49, type: 3}
   wave: {fileID: 6618993213855089272, guid: 0c91b882326b44e77a7fcfb1e28cc94f, type: 3}
   gameLogic: {fileID: 0}
