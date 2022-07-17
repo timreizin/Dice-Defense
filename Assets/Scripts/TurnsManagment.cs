@@ -172,6 +172,7 @@ public class TurnsManagment : MonoBehaviour
         //get money income
 
         //temporary!
+        if (Random.Range(0, 5) == 0) return 2;
         return 1;
     }
 

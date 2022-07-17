@@ -10,6 +10,7 @@ public class ShopManagment : MonoBehaviour
     public GameObject gameLogic;
     public int cost;
     public int turretType;
+    public Camera cam;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,10 @@ public class ShopManagment : MonoBehaviour
                     if (GlobalGameData.selectedBuilding.tag == "Effect")
                     {
                         Vector2 mousePos = Input.mousePosition;
+                        mousePos = cam.ScreenToWorldPoint(mousePos);
+                        mousePos *= 100;
+                        mousePos.x += 600.5f;
+                        mousePos.y += 451f;
                         int x = (int)((mousePos.x - 0.01f) / 60f);
                         int y = (int)((mousePos.y - 0.01f) / 60f);
                         if (Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) <= maxAllowedDistance &&
@@ -47,6 +52,10 @@ public class ShopManagment : MonoBehaviour
                     else
                     {
                         Vector2 mousePos = Input.mousePosition;
+                        mousePos = cam.ScreenToWorldPoint(mousePos);
+                        mousePos *= 100;
+                        mousePos.x += 600.5f;
+                        mousePos.y += 451f;
                         int x = (int)((mousePos.x - 0.01f) / 60f);
                         int y = (int)((mousePos.y - 0.01f) / 60f);
                         if (Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) <= maxAllowedDistance &&
