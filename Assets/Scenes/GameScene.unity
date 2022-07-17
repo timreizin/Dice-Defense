@@ -522,6 +522,7 @@ MonoBehaviour:
   BackgroundTopFace: {fileID: 371639233}
   BackgroundUpFace: {fileID: 742416592}
   BackgroundDownFace: {fileID: 2004680594}
+  pause: {fileID: 1990281798}
   player: {fileID: 125751542}
 --- !u!1 &470774886
 GameObject:
@@ -1455,6 +1456,7 @@ MonoBehaviour:
   minAllowedDistance: 2
   maxAllowedDistance: 3
   building: {fileID: 5971785199502049975, guid: 0af1826ccedbd8241b772f79986d8868, type: 3}
+  gameLogic: {fileID: 1729966761}
   cost: 4
 --- !u!1 &1488159103
 GameObject:
@@ -1573,6 +1575,7 @@ MonoBehaviour:
   minAllowedDistance: 1
   maxAllowedDistance: 5
   building: {fileID: 3732820269114016053, guid: f681c0601896d714885739de84306ced, type: 3}
+  gameLogic: {fileID: 1729966761}
   cost: 2
 --- !u!61 &1668826810
 BoxCollider2D:
