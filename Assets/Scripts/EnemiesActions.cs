@@ -189,6 +189,11 @@ public class EnemiesActions : MonoBehaviour
         else if (IsObjectByTag(newPosition, "Wall"))
         {
             //maybe add animation going half-way, and then back
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalfAndBack(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0)));
             if (!GlobalGameData.objectsTable[newPosition.x, newPosition.y].GetComponent<Wall>().DecreaseHP())
             {
                 Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
@@ -197,6 +202,11 @@ public class EnemiesActions : MonoBehaviour
         else if (IsObjectByTag(newPosition, "Mine"))
         {
             //add animation of moving there, and then baaaam
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0)));
             Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
             Destroy(GlobalGameData.objectsTable[from.x, from.y]);
         }
@@ -225,7 +235,7 @@ public class EnemiesActions : MonoBehaviour
         {
             CheckAndMove(iterator, move, type);
         } while (IncrementIterator(ref iterator, direction));
-    } // add case for movement into player
+    } 
 
     public void MoveEnemiesToPlayer(int type)
     {
@@ -299,16 +309,45 @@ public class EnemiesActions : MonoBehaviour
 
     public void SpawnEnemies(int amount)
     {
+        Debug.Log("ehmmm");
         for (int i = 0; i < amount; ++i)
         {
             Vector2Int position = GetRandomPosition();
             if (GlobalGameData.objectsTable[position.x, position.y] == null)
             {
                 //spawn
+                GetComponent<TurnsManagment>().counter++;
                 GlobalGameData.objectsTable[position.x, position.y] = Instantiate(Enemy);
-                GlobalGameData.objectsTable[position.x, position.y].transform.position = FromTableToWorld(position);
                 GlobalGameData.objectsTable[position.x, position.y].GetComponent<Enemy>().type = GetEnemyType();
                 GlobalGameData.objectsTable[position.x, position.y].GetComponent<Enemy>().gameLogic = gameObject;
+                if (position.x == 0)
+                {
+                    --position.x;
+                    GlobalGameData.objectsTable[position.x + 1, position.y].transform.position = FromTableToWorld(position);
+                    Vector2Int move = DirectionToMove('R');
+                    StartCoroutine(GlobalGameData.objectsTable[position.x + 1, position.y].GetComponent<Enemy>().Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f, GlobalGameData.CELL_SIZE * move.y / 100f, 0)));
+                }
+                else if (position.x == GlobalGameData.HORIZONTAL_SIZE - 1)
+                {
+                    ++position.x;
+                    GlobalGameData.objectsTable[position.x - 1, position.y].transform.position = FromTableToWorld(position);
+                    Vector2Int move = DirectionToMove('L');
+                    StartCoroutine(GlobalGameData.objectsTable[position.x - 1, position.y].GetComponent<Enemy>().Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f, GlobalGameData.CELL_SIZE * move.y / 100f, 0)));
+                }
+                else if (position.y == 0)
+                {
+                    --position.y;
+                    GlobalGameData.objectsTable[position.x, position.y + 1].transform.position = FromTableToWorld(position);
+                    Vector2Int move = DirectionToMove('U');
+                    StartCoroutine(GlobalGameData.objectsTable[position.x, position.y + 1].GetComponent<Enemy>().Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f, GlobalGameData.CELL_SIZE * move.y / 100f, 0)));
+                }
+                else if (position.y == GlobalGameData.VERTICAL_SIZE - 1)
+                {
+                    ++position.y;
+                    GlobalGameData.objectsTable[position.x, position.y - 1].transform.position = FromTableToWorld(position);
+                    Vector2Int move = DirectionToMove('D');
+                    StartCoroutine(GlobalGameData.objectsTable[position.x, position.y - 1].GetComponent<Enemy>().Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f, GlobalGameData.CELL_SIZE * move.y / 100f, 0)));
+                }
             }
         }
     }
