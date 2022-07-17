@@ -136,10 +136,9 @@ public class TurnsManagment : MonoBehaviour
                 //move every target(new cube state + another random) enemy for the second time
                 if (locker)
                 {
-                    GetComponent<EnemiesActions>().MoveEnemiesToPlayer(player.GetComponent<PlayerManagment>().topFace.type);
-                    int secondType = Random.Range(1, 7);
+                    int secondType = Random.Range(1, 6);
                     if (secondType >= player.GetComponent<PlayerManagment>().topFace.type) ++secondType;
-                    GetComponent<EnemiesActions>().MoveEnemiesToPlayer(secondType);
+                    GetComponent<EnemiesActions>().MoveTwoEnemiesToPlayer(player.GetComponent<PlayerManagment>().topFace.type, secondType);
                     locker = false;
                 }
                 if (counter == 0)
