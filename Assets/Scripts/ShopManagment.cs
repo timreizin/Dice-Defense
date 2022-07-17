@@ -7,6 +7,7 @@ public class ShopManagment : MonoBehaviour
     public int minAllowedDistance;
     public int maxAllowedDistance;
     public GameObject building;
+    public GameObject gameLogic;
     public int cost;
     // Start is called before the first frame update
     void Start()
@@ -27,17 +28,29 @@ public class ShopManagment : MonoBehaviour
             {
                 if (building == GlobalGameData.selectedBuilding)
                 {
-                    Vector2 mousePos = Input.mousePosition;
-                    int x = (int)((mousePos.x - 0.01f) / 60f);
-                    int y = (int)((mousePos.y - 0.01f) / 60f);
-                    Debug.Log(new Vector2(x, y));
-                    if (Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) <= maxAllowedDistance &&
-                        Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) >= minAllowedDistance &&
-                        GlobalGameData.money >= cost && GlobalGameData.objectsTable[x, y] == null)
+                    Debug.Log(building.tag);
+                    if (GlobalGameData.selectedBuilding.tag == "Effect")
                     {
-                        GlobalGameData.money -= cost;
-                        GlobalGameData.objectsTable[x, y] = Instantiate(building);
-                        GlobalGameData.objectsTable[x, y].transform.position = FromTableToWorld(new Vector2Int(x, y));
+                        gameLogic.GetComponent<EnemiesActions>().PushBack();
+                        if (GlobalGameData.money >= cost)
+                        {
+                            GlobalGameData.money -= cost;
+                        }
+                    }
+                    else
+                    {
+                        Vector2 mousePos = Input.mousePosition;
+                        int x = (int)((mousePos.x - 0.01f) / 60f);
+                        int y = (int)((mousePos.y - 0.01f) / 60f);
+                        Debug.Log(new Vector2(x, y));
+                        if (Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) <= maxAllowedDistance &&
+                            Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) >= minAllowedDistance &&
+                            GlobalGameData.money >= cost && GlobalGameData.objectsTable[x, y] == null)
+                        {
+                            GlobalGameData.money -= cost;
+                            GlobalGameData.objectsTable[x, y] = Instantiate(building);
+                            GlobalGameData.objectsTable[x, y].transform.position = FromTableToWorld(new Vector2Int(x, y));
+                        }
                     }
                 }
             }

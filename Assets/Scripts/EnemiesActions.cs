@@ -169,11 +169,10 @@ public class EnemiesActions : MonoBehaviour
         return true;
     }
 
-    void CheckAndMove(Vector2Int from, Vector2Int move, int type)
+    void CheckAndMove(Vector2Int from, Vector2Int move, int type = 0)
     {
         if (GlobalGameData.objectsTable[from.x, from.y] == null) return;
         if (GlobalGameData.objectsTable[from.x, from.y].tag != "Enemy") return;
-        //Debug.Log(2);
         if (type != 0 && GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type) return;
         Vector2Int newPosition = from + move;
         if (!IsValidMove(newPosition))
@@ -349,6 +348,61 @@ public class EnemiesActions : MonoBehaviour
                     StartCoroutine(GlobalGameData.objectsTable[position.x, position.y - 1].GetComponent<Enemy>().Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f, GlobalGameData.CELL_SIZE * move.y / 100f, 0)));
                 }
             }
+        }
+    }
+
+    char OppositeDirection(char direction)
+    {
+        switch (direction)
+        {
+            case 'U':
+                return 'D';
+
+            case 'D':
+                return 'U';
+
+            case 'R':
+                return 'L';
+
+            case 'L':
+                return 'R';
+        }
+        return 'O';
+    }
+
+    public void PushBack()
+    {
+        for (int level = GlobalGameData.HORIZONTAL_SIZE / 2; level >= 1; --level)
+        {
+            Vector2Int iterator = new Vector2Int(GlobalGameData.HORIZONTAL_SIZE / 2 - level, GlobalGameData.VERTICAL_SIZE / 2 - level);
+            while (++iterator.y != GlobalGameData.VERTICAL_SIZE / 2 + level)
+            {
+                CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
+            }
+
+            while (++iterator.x != GlobalGameData.HORIZONTAL_SIZE / 2 + level)
+            {
+                CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
+            }
+
+            while (--iterator.y != GlobalGameData.VERTICAL_SIZE / 2 - level)
+            {
+                CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
+            }
+
+            while (--iterator.x != GlobalGameData.HORIZONTAL_SIZE / 2 - level)
+            {
+                CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
+            }
+
+            //now corners
+            CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
+            iterator.y += 2 * level;
+            CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
+            iterator.x += 2 * level;
+            CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
+            iterator.y -= 2 * level;
+            CheckAndMove(iterator, DirectionToMove(OppositeDirection(movementTable[iterator.x, iterator.y])));
         }
     }
 
