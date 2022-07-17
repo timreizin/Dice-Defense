@@ -48,6 +48,7 @@ MonoBehaviour:
   type: 0
   range: 2
   bullet: {fileID: 3837792160104294322, guid: 9169082b189db49a8a0e68c582d4ea49, type: 3}
+  wave: {fileID: 6618993213855089272, guid: 0c91b882326b44e77a7fcfb1e28cc94f, type: 3}
   gameLogic: {fileID: 0}
 --- !u!212 &-3786125950733677390
 SpriteRenderer:
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -903371091
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4964f9512b9294afc8fedf6700ef424b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
