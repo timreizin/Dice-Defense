@@ -189,6 +189,11 @@ public class EnemiesActions : MonoBehaviour
         else if (IsObjectByTag(newPosition, "Wall"))
         {
             //maybe add animation going half-way, and then back
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalfAndBack(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0)));
             if (!GlobalGameData.objectsTable[newPosition.x, newPosition.y].GetComponent<Wall>().DecreaseHP())
             {
                 Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);

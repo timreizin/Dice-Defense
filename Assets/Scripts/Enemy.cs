@@ -36,7 +36,29 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
         gameLogic.GetComponent<TurnsManagment>().counter--;
-        Debug.Log(gameLogic.GetComponent<TurnsManagment>().counter);
+    }
+
+    public IEnumerator MoveHalfAndBack(Vector3 move)
+    {
+        gameLogic.GetComponent<TurnsManagment>().counter++;
+        Vector3 position = transform.position;
+        Vector3 newPosition = position + move / 2f;
+        float elapsedTime = 0;
+        while (elapsedTime < MOVE_TIME / 2f)
+        {
+            transform.position = Vector3.Lerp(position, newPosition, elapsedTime / (MOVE_TIME / 2f));
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= MOVE_TIME / 2f) transform.position = newPosition;
+            yield return null;
+        }
+        while (elapsedTime < MOVE_TIME)
+        {
+            transform.position = Vector3.Lerp(newPosition, position, elapsedTime / (MOVE_TIME / 2f) - 1f);
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= MOVE_TIME) transform.position = position;
+            yield return null;
+        }
+        gameLogic.GetComponent<TurnsManagment>().counter--;
     }
 
     //add function for destroyment

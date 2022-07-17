@@ -6,7 +6,7 @@ public static class GlobalGameData
 {
     //global game info, availble for every object
 
-    public static float cellUpdateTime;
+    public const float CELL_UPDATE_TIME = 0.5f;
     public static bool IsTabMenuOpened = false;
     public static bool IsGamePaused = false;
     public static string gamePhase = "enemySpawnTurn";
