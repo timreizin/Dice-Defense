@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    const float MOVE_TIME = 1; //time in which enemy moves from square to square
+    const float MOVE_TIME = 0.5f; //time in which enemy moves from square to square
 
     public int type;
+    public Sprite[] sprite = new Sprite[6];
 
     public GameObject gameLogic;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        GetComponent<SpriteRenderer>().sprite = sprite[type - 1];
     }
 
     // Update is called once per frame

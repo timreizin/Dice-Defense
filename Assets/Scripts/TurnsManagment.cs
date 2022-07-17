@@ -14,6 +14,7 @@ public class TurnsManagment : MonoBehaviour
     void Start()
     {
         locker = true;
+        GlobalGameData.objectsTable[GlobalGameData.HORIZONTAL_SIZE / 2, GlobalGameData.VERTICAL_SIZE / 2] = player;
     }
 
     void Update()
@@ -115,10 +116,13 @@ public class TurnsManagment : MonoBehaviour
             }
             if (GlobalGameData.gamePhase == "enemySecondTurn")
             {
-                //move every target(new cube state) enemy for the second time
+                //move every target(new cube state + another random) enemy for the second time
                 if (locker)
                 {
-                    GetComponent<EnemiesActions>().MoveEnemiesToPlayer(0);
+                    GetComponent<EnemiesActions>().MoveEnemiesToPlayer(player.GetComponent<PlayerManagment>().topFace.type);
+                    int secondType = Random.Range(1, 7);
+                    if (secondType >= player.GetComponent<PlayerManagment>().topFace.type) ++secondType;
+                    GetComponent<EnemiesActions>().MoveEnemiesToPlayer(secondType);
                     locker = false;
                 }
                 if (counter == 0)
