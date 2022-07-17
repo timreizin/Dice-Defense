@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ScoreTextManagment : MonoBehaviour
+public class MoneyText : MonoBehaviour
 {
     private string text;
     public TMP_Text outputText;
@@ -11,7 +11,7 @@ public class ScoreTextManagment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text = "Score: " + GlobalGameData.score.ToString();
+        text = "Money: " + GlobalGameData.money.ToString();
         outputText.text = text;
     }
 }

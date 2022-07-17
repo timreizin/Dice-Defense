@@ -18,5 +18,7 @@ public static class GlobalGameData
 
     public const int CELL_SIZE = 60;
 
+    public static GameObject selectedBuilding = null;
+
     public static GameObject[,] objectsTable = new GameObject[HORIZONTAL_SIZE, VERTICAL_SIZE]; //down left corner is (0, 0), like in usual cartesian coordinates
 }

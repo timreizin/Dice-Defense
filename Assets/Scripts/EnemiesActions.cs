@@ -86,7 +86,8 @@ public class EnemiesActions : MonoBehaviour
             position.x >= GlobalGameData.HORIZONTAL_SIZE ||
             position.y >= GlobalGameData.VERTICAL_SIZE)
             return false;
-        return GlobalGameData.objectsTable[position.x, position.y] == null; 
+        //return GlobalGameData.objectsTable[position.x, position.y] == null; 
+        return true;
     }
 
     bool IsObjectByTag(Vector2Int position, string tag)
@@ -175,11 +176,17 @@ public class EnemiesActions : MonoBehaviour
         //Debug.Log(2);
         if (type != 0 && GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type) return;
         Vector2Int newPosition = from + move;
-        if (IsObjectByTag(newPosition, "Player"))
+        if (!IsValidMove(newPosition))
+        {
+            //destroy
+            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
+        }
+        else if (IsObjectByTag(newPosition, "Player"))
         {
             player.GetComponent<PlayerManagment>().DecreaseHP();
+            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
         }
-        if (IsObjectByTag(newPosition, "Wall"))
+        else if (IsObjectByTag(newPosition, "Wall"))
         {
             //maybe add animation going half-way, and then back
             if (!GlobalGameData.objectsTable[newPosition.x, newPosition.y].GetComponent<Wall>().DecreaseHP())
@@ -187,15 +194,14 @@ public class EnemiesActions : MonoBehaviour
                 Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
             }
         }
-        if (IsObjectByTag(newPosition, "Mine"))
+        else if (IsObjectByTag(newPosition, "Mine"))
         {
             //add animation of moving there, and then baaaam
             Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
             Destroy(GlobalGameData.objectsTable[from.x, from.y]);
         }
-        if (!IsValidMove(newPosition))
+        else if (IsObjectByTag(newPosition, "Enemy"))
         {
-            //destroy
             Destroy(GlobalGameData.objectsTable[from.x, from.y]);
         }
         else
