@@ -177,8 +177,12 @@ public class EnemiesActions : MonoBehaviour
         Vector2Int newPosition = from + move;
         if (!IsValidMove(newPosition))
         {
-            //destroy
-            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f,
+                                  GlobalGameData.CELL_SIZE * move.y / 100f,
+                                  0)));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
         }
         else if (IsObjectByTag(newPosition, "Turret"))
         {
@@ -197,6 +201,7 @@ public class EnemiesActions : MonoBehaviour
                 .GetComponent<Enemy>()
                 .MoveHalfToPlayer(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f, GlobalGameData.CELL_SIZE * move.y / 200f,
                                   0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
         }
         else if (IsObjectByTag(newPosition, "Wall"))
         {
@@ -215,6 +220,7 @@ public class EnemiesActions : MonoBehaviour
                 .MoveHalfAndDestroy(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
                                   GlobalGameData.CELL_SIZE * move.y / 200f,
                                   0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
         }
         else if (IsObjectByTag(newPosition, "Enemy"))
         {
@@ -223,6 +229,7 @@ public class EnemiesActions : MonoBehaviour
                 .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
                                   GlobalGameData.CELL_SIZE * move.y / 200f,
                                   0)));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
         }
         else
         {
@@ -319,7 +326,6 @@ public class EnemiesActions : MonoBehaviour
 
     public void SpawnEnemies(int amount)
     {
-        Debug.Log("ehmmm");
         for (int i = 0; i < amount; ++i)
         {
             Vector2Int position = GetRandomPosition();
@@ -429,6 +435,114 @@ public class EnemiesActions : MonoBehaviour
         }
         return amount;
     }*/
+    public void MoveTwoEnemiesToPlayer(int type1, int type2)
+    {
+        for (int level = 1; level <= GlobalGameData.HORIZONTAL_SIZE / 2; ++level)
+        {
+            Vector2Int iterator = new Vector2Int(GlobalGameData.HORIZONTAL_SIZE / 2 - level, GlobalGameData.VERTICAL_SIZE / 2 - level);
+            while (++iterator.y != GlobalGameData.VERTICAL_SIZE / 2 + level)
+            {
+                CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+            }
 
+            while (++iterator.x != GlobalGameData.HORIZONTAL_SIZE / 2 + level)
+            {
+                CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+            }
 
+            while (--iterator.y != GlobalGameData.VERTICAL_SIZE / 2 - level)
+            {
+                CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+            }
+
+            while (--iterator.x != GlobalGameData.HORIZONTAL_SIZE / 2 - level)
+            {
+                CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+            }
+
+            //now corners
+            CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+            iterator.y += 2 * level;
+            CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+            iterator.x += 2 * level;
+            CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+            iterator.y -= 2 * level;
+            CheckAndMove2(iterator, DirectionToMove(movementTable[iterator.x, iterator.y]), type1, type2);
+        }
+    }
+    void CheckAndMove2(Vector2Int from, Vector2Int move, int type1, int type2)
+    {
+        if (GlobalGameData.objectsTable[from.x, from.y] == null) return;
+        if (GlobalGameData.objectsTable[from.x, from.y].tag != "Enemy") return;
+        if (GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type1 &&
+            GlobalGameData.objectsTable[from.x, from.y].GetComponent<Enemy>().type != type2) return;
+        Vector2Int newPosition = from + move;
+        if (!IsValidMove(newPosition))
+        {
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f,
+                                  GlobalGameData.CELL_SIZE * move.y / 100f,
+                                  0)));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
+        else if (IsObjectByTag(newPosition, "Turret"))
+        {
+            GetComponent<TurnsManagment>().counter++;
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveToDestroy(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f,
+                                  GlobalGameData.CELL_SIZE * move.y / 100f,
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
+            GlobalGameData.objectsTable[newPosition.x, newPosition.y] = GlobalGameData.objectsTable[from.x, from.y];
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
+        else if (IsObjectByTag(newPosition, "Player"))
+        {
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalfToPlayer(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f, GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
+        else if (IsObjectByTag(newPosition, "Wall"))
+        {
+            //maybe add animation going half-way, and then back
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalfAndBack(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
+        }
+        else if (IsObjectByTag(newPosition, "Mine"))
+        {
+            //add animation of moving there, and then baaaam
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalfAndDestroy(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
+        else if (IsObjectByTag(newPosition, "Enemy"))
+        {
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0)));
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
+        else
+        {
+            GetComponent<TurnsManagment>().counter++;
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .Move(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f,
+                                  GlobalGameData.CELL_SIZE * move.y / 100f,
+                                  0)));
+            GlobalGameData.objectsTable[newPosition.x, newPosition.y] = GlobalGameData.objectsTable[from.x, from.y];
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
+    }
 }
