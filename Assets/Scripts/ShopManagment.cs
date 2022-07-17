@@ -29,13 +29,19 @@ public class ShopManagment : MonoBehaviour
             {
                 if (building == GlobalGameData.selectedBuilding)
                 {
-                    Debug.Log(building.tag);
                     if (GlobalGameData.selectedBuilding.tag == "Effect")
                     {
-                        gameLogic.GetComponent<EnemiesActions>().PushBack();
-                        if (GlobalGameData.money >= cost)
+                        Vector2 mousePos = Input.mousePosition;
+                        int x = (int)((mousePos.x - 0.01f) / 60f);
+                        int y = (int)((mousePos.y - 0.01f) / 60f);
+                        if (Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) <= maxAllowedDistance &&
+                            Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) >= minAllowedDistance)
                         {
-                            GlobalGameData.money -= cost;
+                            gameLogic.GetComponent<EnemiesActions>().PushBack();
+                            if (GlobalGameData.money >= cost)
+                            {
+                                GlobalGameData.money -= cost;
+                            }
                         }
                     }
                     else
@@ -43,7 +49,6 @@ public class ShopManagment : MonoBehaviour
                         Vector2 mousePos = Input.mousePosition;
                         int x = (int)((mousePos.x - 0.01f) / 60f);
                         int y = (int)((mousePos.y - 0.01f) / 60f);
-                        Debug.Log(new Vector2(x, y));
                         if (Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) <= maxAllowedDistance &&
                             Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) >= minAllowedDistance &&
                             GlobalGameData.money >= cost && GlobalGameData.objectsTable[x, y] == null)
