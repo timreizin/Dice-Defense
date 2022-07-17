@@ -18,6 +18,15 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GlobalGameData.IsTabMenuOpened)
+        {
+            transform.localScale = Vector3.zero;
+        }
+        else
+        {
+            transform.localScale = Vector3.one;
+        }
+        if (GlobalGameData.IsGamePaused) return;
         transform.position += transform.up * Time.deltaTime * speed;
         range.x -= Mathf.Abs(transform.up.x) * Time.deltaTime * speed;
         range.y -= Mathf.Abs(transform.up.y) * Time.deltaTime * speed;
