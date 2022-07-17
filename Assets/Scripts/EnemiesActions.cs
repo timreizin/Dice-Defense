@@ -202,6 +202,11 @@ public class EnemiesActions : MonoBehaviour
         else if (IsObjectByTag(newPosition, "Mine"))
         {
             //add animation of moving there, and then baaaam
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0)));
             Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
             Destroy(GlobalGameData.objectsTable[from.x, from.y]);
         }
