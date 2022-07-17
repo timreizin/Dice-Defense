@@ -27,9 +27,7 @@ public class TurnsManagment : MonoBehaviour
             //check all turns situations
             if (GlobalGameData.gamePhase == "enemySpawnTurn")
             {
-                //spawn new enemies
-                
-                
+                //spawn new enemies     
                 if (locker)
                 {
                     GetComponent<EnemiesActions>().SpawnEnemies(getSpawnRate());
@@ -122,7 +120,16 @@ public class TurnsManagment : MonoBehaviour
             if (GlobalGameData.gamePhase == "turrelShooting")
             {
                 //shoot from every turrel
-                GlobalGameData.gamePhase = "enemySecondTurn";
+                if (locker)
+                {
+                    GetComponent<TurretsActions>().Shoot();
+                    locker = false;
+                }
+                if (counter == 0)
+                {
+                    locker = true;
+                    GlobalGameData.gamePhase = "enemySecondTurn";
+                }
             }
             if (GlobalGameData.gamePhase == "enemySecondTurn")
             {
