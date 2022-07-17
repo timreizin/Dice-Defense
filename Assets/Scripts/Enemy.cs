@@ -31,12 +31,12 @@ public class Enemy : MonoBehaviour
         while (elapsedTime < MOVE_TIME)
         {
             transform.position = Vector3.Lerp(position, newPosition, elapsedTime / MOVE_TIME);
-            
             elapsedTime += Time.deltaTime;
             if (elapsedTime >= MOVE_TIME) transform.position = newPosition;
             yield return null;
         }
         gameLogic.GetComponent<TurnsManagment>().counter--;
+        Debug.Log(gameLogic.GetComponent<TurnsManagment>().counter);
     }
 
     //add function for destroyment
