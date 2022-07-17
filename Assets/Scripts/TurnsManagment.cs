@@ -28,8 +28,18 @@ public class TurnsManagment : MonoBehaviour
             if (GlobalGameData.gamePhase == "enemySpawnTurn")
             {
                 //spawn new enemies
-                GetComponent<EnemiesActions>().SpawnEnemies(getSpawnRate());
-                GlobalGameData.gamePhase = "playerTurn";
+                
+                
+                if (locker)
+                {
+                    GetComponent<EnemiesActions>().SpawnEnemies(getSpawnRate());
+                    locker = false;
+                }
+                if (counter == 0)
+                {
+                    locker = true;
+                    GlobalGameData.gamePhase = "playerTurn";
+                }
             }
             if (GlobalGameData.gamePhase == "playerTurn")
             {
