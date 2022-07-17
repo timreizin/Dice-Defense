@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManagment : MonoBehaviour
 {
@@ -73,7 +74,7 @@ public class PlayerManagment : MonoBehaviour
         if (health <= 0)
         {
             //end the game, show score and ask for replay
-
+            SceneManager.LoadScene("TheEnd");
         }
     }
 }
