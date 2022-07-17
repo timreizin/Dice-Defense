@@ -308,7 +308,7 @@ SpriteRenderer:
   m_SortingLayerID: -1465876051
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86815631e79cdf6439c66d01ea3aa5e6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c74b822f24c6bb04f8cb4aa4a372b5c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -337,6 +337,7 @@ MonoBehaviour:
   gameLogic: {fileID: 1729966761}
   cost: 12
   turretType: 2
+  cam: {fileID: 519420031}
 --- !u!1 &125751542
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +401,7 @@ MonoBehaviour:
   upFace:
     type: 3
     sprite: {fileID: 21300000, guid: b2af3c2d656561b409c4ab99c6c3c6b5, type: 3}
-  health: 3
+  health: 5
   background: {fileID: 381498061}
 --- !u!212 &125751545
 SpriteRenderer:
@@ -911,7 +912,7 @@ SpriteRenderer:
   m_SortingLayerID: -1465876051
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f7e13fec1c942124fa39d336436ff6ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23a887131c0dcbc4b9226f8e0d104b8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -940,6 +941,7 @@ MonoBehaviour:
   gameLogic: {fileID: 1729966761}
   cost: 10
   turretType: 0
+  cam: {fileID: 519420031}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,7 +1613,7 @@ SpriteRenderer:
   m_SortingLayerID: -1465876051
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 67637e2a1c56aae4b8687a11ffd15bcf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ac06ece5f2ecb5e4a84a3417a4244e9f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1638,8 +1640,9 @@ MonoBehaviour:
   maxAllowedDistance: 7
   building: {fileID: 3421196257446907106, guid: 6e7b9c78c4e1faf4aa0f5a07e60031b1, type: 3}
   gameLogic: {fileID: 1729966761}
-  cost: 8
+  cost: 15
   turretType: 0
+  cam: {fileID: 519420031}
 --- !u!1 &1109241726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,6 +1973,7 @@ MonoBehaviour:
   gameLogic: {fileID: 1729966761}
   cost: 4
   turretType: 0
+  cam: {fileID: 519420031}
 --- !u!61 &1333022779
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2200,6 +2204,7 @@ MonoBehaviour:
   gameLogic: {fileID: 1729966761}
   cost: 2
   turretType: 1
+  cam: {fileID: 519420031}
 --- !u!212 &1668826811
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2452,7 +2457,7 @@ SpriteRenderer:
   m_SortingLayerID: -1465876051
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 36e51b8cc443c6c4cb4309122aea8969, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aab67beeea1334d4f94f268023a26d59, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2481,6 +2486,7 @@ MonoBehaviour:
   gameLogic: {fileID: 1729966761}
   cost: 10
   turretType: 1
+  cam: {fileID: 519420031}
 --- !u!1 &1744166372
 GameObject:
   m_ObjectHideFlags: 0
