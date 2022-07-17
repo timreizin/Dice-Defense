@@ -181,10 +181,24 @@ public class EnemiesActions : MonoBehaviour
             //destroy
             Destroy(GlobalGameData.objectsTable[from.x, from.y]);
         }
+        else if (IsObjectByTag(newPosition, "Turret"))
+        {
+            GetComponent<TurnsManagment>().counter++;
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveToDestroy(new Vector3(GlobalGameData.CELL_SIZE * move.x / 100f,
+                                  GlobalGameData.CELL_SIZE * move.y / 100f,
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
+            GlobalGameData.objectsTable[newPosition.x, newPosition.y] = GlobalGameData.objectsTable[from.x, from.y];
+            GlobalGameData.objectsTable[from.x, from.y] = null;
+        }
         else if (IsObjectByTag(newPosition, "Player"))
         {
-            player.GetComponent<PlayerManagment>().DecreaseHP();
-            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalfToPlayer(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
         }
         else if (IsObjectByTag(newPosition, "Wall"))
         {
@@ -193,26 +207,24 @@ public class EnemiesActions : MonoBehaviour
                 .GetComponent<Enemy>()
                 .MoveHalfAndBack(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
                                   GlobalGameData.CELL_SIZE * move.y / 200f,
-                                  0)));
-            if (!GlobalGameData.objectsTable[newPosition.x, newPosition.y].GetComponent<Wall>().DecreaseHP())
-            {
-                Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
-            }
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
         }
         else if (IsObjectByTag(newPosition, "Mine"))
         {
             //add animation of moving there, and then baaaam
             StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
                 .GetComponent<Enemy>()
-                .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                .MoveHalfAndDestroy(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
                                   GlobalGameData.CELL_SIZE * move.y / 200f,
-                                  0)));
-            Destroy(GlobalGameData.objectsTable[newPosition.x, newPosition.y]);
-            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
+                                  0), GlobalGameData.objectsTable[newPosition.x, newPosition.y]));
         }
         else if (IsObjectByTag(newPosition, "Enemy"))
         {
-            Destroy(GlobalGameData.objectsTable[from.x, from.y]);
+            StartCoroutine(GlobalGameData.objectsTable[from.x, from.y]
+                .GetComponent<Enemy>()
+                .MoveHalf(new Vector3(GlobalGameData.CELL_SIZE * move.x / 200f,
+                                  GlobalGameData.CELL_SIZE * move.y / 200f,
+                                  0)));
         }
         else
         {
