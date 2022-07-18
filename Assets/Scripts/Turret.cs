@@ -42,6 +42,7 @@ public class Turret : MonoBehaviour
             newBullet.GetComponent<Bullet>().range = new Vector3(range * GlobalGameData.CELL_SIZE / 100f, range * GlobalGameData.CELL_SIZE / 100f, 0);
             newBullet.transform.position = FromTableToWorld(position);
             newBullet.transform.SetParent(transform, true);
+            gameLogic.GetComponent<TurnsManagment>().counter += 2;
         }
         else if (type == 1)
         {
@@ -58,10 +59,13 @@ public class Turret : MonoBehaviour
             newBullet.GetComponent<Bullet>().range = new Vector3(range * GlobalGameData.CELL_SIZE / 100f, range * GlobalGameData.CELL_SIZE / 100f, 0);
             newBullet.transform.position = FromTableToWorld(position);
             newBullet.transform.SetParent(transform, true);
+            gameLogic.GetComponent<TurnsManagment>().counter += 2;
             //down
         }
         else
         {
+
+            gameLogic.GetComponent<TurnsManagment>().counter++;
             GameObject newWave = Instantiate(wave);
             newWave.GetComponent<Wave>().gameLogic = gameLogic;
             newWave.transform.position = FromTableToWorld(position);
@@ -78,7 +82,11 @@ public class Turret : MonoBehaviour
     public void EnemyKilled()
     {
         --ammunition;
-        if (ammunition == 0)
+    }
+
+    public void destroyIt()
+    {
+        if(ammunition < 0)
         {
             Destroy(gameObject);
         }

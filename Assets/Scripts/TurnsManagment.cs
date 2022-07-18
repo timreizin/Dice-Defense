@@ -21,6 +21,8 @@ public class TurnsManagment : MonoBehaviour
     {
         if (!GlobalGameData.IsGamePaused)
         {
+            Debug.Log(counter);
+            Debug.Log(GlobalGameData.gamePhase);
             //update local timer
             timer += Time.deltaTime;
 
@@ -127,6 +129,19 @@ public class TurnsManagment : MonoBehaviour
                 }
                 if (counter == 0)
                 {
+                    //destroy turrets
+
+                    for(int i= 0; i < GlobalGameData.HORIZONTAL_SIZE; i++)
+                    {
+                        for(int j = 0; j < GlobalGameData.VERTICAL_SIZE; j++)
+                        {
+                            if (GlobalGameData.objectsTable[i, j] != null && GlobalGameData.objectsTable[i,j].tag == "Turret")
+                            {
+                                GlobalGameData.objectsTable[i, j].GetComponent<Turret>().destroyIt();
+                            }
+                        }
+                    }
+
                     locker = true;
                     GlobalGameData.gamePhase = "enemySecondTurn";
                 }

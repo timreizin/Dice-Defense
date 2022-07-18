@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameLogic.GetComponent<TurnsManagment>().counter++;
+
     }
 
     // Update is called once per frame
