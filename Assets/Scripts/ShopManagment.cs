@@ -42,10 +42,10 @@ public class ShopManagment : MonoBehaviour
                         if (Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) <= maxAllowedDistance &&
                             Mathf.Max(Mathf.Abs(7 - x), Mathf.Abs(7 - y)) >= minAllowedDistance)
                         {
-                            gameLogic.GetComponent<EnemiesActions>().PushBack();
                             if (GlobalGameData.money >= cost)
                             {
                                 GlobalGameData.money -= cost;
+                                gameLogic.GetComponent<EnemiesActions>().PushBack();
                             }
                         }
                     }
